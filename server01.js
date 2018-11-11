@@ -1,10 +1,10 @@
 const Koa = require('koa')
-const Router = require('koa-router')
 
 const server = new Koa() // 使用new创建一个Server
 
 server.listen(8080) // 监听8080端口
 
+const Router = require('koa-router')
 const router = new Router()
 
 // router常用方法有get（匹配get请求）、post（匹配post请求）、all（匹配所有请求）
