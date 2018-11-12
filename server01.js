@@ -47,3 +47,5 @@ userRouter.use('/admin', admin.routes())
 router.use('/user', userRouter.routes()) // 将userRouter添加到主路由router中。
 
 server.use(router.routes()) // 使用use方法，将router中间件添加到Server中。
+
+console.log(`Server running at http://localhost:8080/`)
