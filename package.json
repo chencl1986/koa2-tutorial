@@ -18,7 +18,8 @@
   "homepage": "https://github.com/chencl1986/koa2-tutorial#readme",
   "dependencies": {
     "koa": "^2.6.2",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
