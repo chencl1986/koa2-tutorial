@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  // 在ejs语法中，只要在 <%=  %> 之外的内容，都会被当做字符串解析
+  <% include header.ejs %> // 引入其他模块
+  <%=name%> // 通过渲染函数传入的属性
+  <% for( let index = 0; index < arr.length; index++ ) { %> // 使用for循环遍历
+  <div class="test">
+    <%= arr[index] %> 
+  </div>
+  <% } %>
+  <% arr.forEach(element => { %>  // 使用forEach遍历
+    <%= element %> 
+  <% }) %>
+  <% // 支持像JavaScript一样定义变量
+    const a = 1
+    const b = 2
+  -%> // 加横线可以去掉变异后的空行
+  <%= `a + b = ${a + b}` %> // 定义变量后可以直接使用
+</body>
+</html>

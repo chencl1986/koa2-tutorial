@@ -1,0 +1,16 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    meta(name="site",content="test")
+    title=title
+    script.
+      window.onload=function () {
+        console.log('loaded')
+      }
+  body
+    ul
+      each user in users
+        li(class="user-item clearfix")
+          span(class="fl name")=user.name
+          span(class="fl")=user.age
