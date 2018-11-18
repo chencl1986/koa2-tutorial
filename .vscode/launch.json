@@ -1,0 +1,164 @@
+{
+  // 使用 IntelliSense 了解相关属性。 
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server01",
+      "program": "${workspaceFolder}\\lesson1\\server01.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server02",
+      "program": "${workspaceFolder}\\lesson1\\server02.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server03",
+      "program": "${workspaceFolder}\\lesson1\\server03.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server04",
+      "program": "${workspaceFolder}\\lesson1\\server04.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server05",
+      "program": "${workspaceFolder}\\lesson1\\server05.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server06",
+      "program": "${workspaceFolder}\\lesson1\\server06.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server07",
+      "program": "${workspaceFolder}\\lesson1\\server07.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server08",
+      "program": "${workspaceFolder}\\lesson1\\server08.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server09",
+      "program": "${workspaceFolder}\\lesson1\\server09.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server10",
+      "program": "${workspaceFolder}\\lesson1\\server10.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server11",
+      "program": "${workspaceFolder}\\lesson1\\server11.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server12",
+      "program": "${workspaceFolder}\\lesson1\\server12.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson1/server13",
+      "program": "${workspaceFolder}\\lesson1\\server13.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/render/server",
+      "program": "${workspaceFolder}\\lesson2\\render\\server.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server/server",
+      "program": "${workspaceFolder}\\lesson2\\server\\server.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server/gen_keys",
+      "program": "${workspaceFolder}\\lesson2\\server\\gen_keys.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server04",
+      "program": "${workspaceFolder}\\lesson2\\server04.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server05",
+      "program": "${workspaceFolder}\\lesson2\\server05.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server06",
+      "program": "${workspaceFolder}\\lesson2\\server06.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server07",
+      "program": "${workspaceFolder}\\lesson2\\server07.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server08",
+      "program": "${workspaceFolder}\\lesson2\\server08.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server09",
+      "program": "${workspaceFolder}\\lesson2\\server09.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server10",
+      "program": "${workspaceFolder}\\lesson2\\server10.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server11",
+      "program": "${workspaceFolder}\\lesson2\\server11.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server12",
+      "program": "${workspaceFolder}\\lesson2\\server12.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "lesson2/server13",
+      "program": "${workspaceFolder}\\lesson2\\server13.js"
+    },
+  ]
+}

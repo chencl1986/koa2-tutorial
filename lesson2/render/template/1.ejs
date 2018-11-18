@@ -12,7 +12,7 @@
   <%=name%> // 通过渲染函数传入的属性
   <% for( let index = 0; index < arr.length; index++ ) { %> // 使用for循环遍历
   <div class="test">
-    <%= arr[index] %> 
+    <%= arr[index] %> // arr为通过渲染函数传入的属性
   </div>
   <% } %>
   <% arr.forEach(element => { %>  // 使用forEach遍历

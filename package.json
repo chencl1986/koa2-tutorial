@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/chencl1986/koa2-tutorial#readme",
   "dependencies": {
+    "@types/ejs": "^2.6.0",
     "co-mysql": "^1.0.0",
     "ejs": "^2.6.1",
     "koa": "^2.6.2",
     "koa-better-body": "^3.0.4",
+    "koa-ejs": "^4.1.2",
     "koa-router": "^7.4.0",
     "koa-session": "^5.10.0",
     "koa-static": "^5.0.0",
