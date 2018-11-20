@@ -103,8 +103,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "lesson2/server04",
-      "program": "${workspaceFolder}\\lesson2\\server04.js"
+      "name": "lesson3/server",
+      "program": "${workspaceFolder}\\lesson3\\server.js"
     },
     {
       "type": "node",

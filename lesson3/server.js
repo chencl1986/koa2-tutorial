@@ -7,10 +7,11 @@ const session = require('koa-session')
 const fs = require('fs')
 const db = require(path.resolve(__dirname, './libs/database'))
 const ejs = require('koa-ejs')
+const config = require('./config')
 
 // 实例化Koa
 const server = new Koa()
-server.listen(8080)
+server.listen(config.PORT)
 
 // 中间件
 server.use(body({
@@ -28,6 +29,9 @@ server.use(session({
 
 // 数据库
 server.context.db = db
+
+// 全局配置
+server.context.config = config
 
 // 模板引擎渲染
 ejs(server, {
@@ -66,4 +70,4 @@ Static(router, {
 
 server.use(router.routes())
 
-console.log(`Server running at http://localhost:8080/`)
+console.log(`Server running at ${config.HTTP_ROOT}`)
