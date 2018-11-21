@@ -75,7 +75,14 @@ router.get('/banner', async (ctx, next) => {
   const table = 'banner_table'
   
   const datas = await ctx.db.query(`SELECT * FROM ${table}`)
-  console.log(datas)
+  
+  await ctx.render('admin/table', {
+    type: 'view',
+    action: '',
+    fields: [],
+    HTTP_ROOT,
+    datas
+  })
 })
 
 // catlog管理
