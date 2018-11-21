@@ -142,7 +142,7 @@ router.get('/banner/delete/:id/', async (ctx, next) => {
   ctx.redirect(`${HTTP_ROOT}/admin/banner`)
 })
 
-router.get('/banner/modify/:id/', async (ctx, next) => {
+/* router.get('/banner/modify/:id/', async (ctx, next) => {
   const {
     id
   } = ctx.params
@@ -160,6 +160,28 @@ router.get('/banner/modify/:id/', async (ctx, next) => {
     fields,
     action: `${HTTP_ROOT}/admin/banner/modify/${id}`
   })
+}) */
+
+router.get('/banner/get/:id', async (ctx, next) => {
+  const {
+    id
+  } = ctx.params
+
+  const rows = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
+
+  if (!rows.length) {
+    ctx.status = 400
+    ctx.body = {
+      err: 1,
+      msg: 'no this data'
+    }
+  } else {
+    ctx.body = {
+      err: 0,
+      msg: 'success',
+      data: rows[0]
+    }
+  }
 })
 
 router.post('/banner/modify/:id/', async (ctx, next) => {
