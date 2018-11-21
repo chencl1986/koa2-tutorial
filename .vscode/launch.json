@@ -109,56 +109,14 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "lesson2/server05",
-      "program": "${workspaceFolder}\\lesson2\\server05.js"
+      "name": "lesson4/server",
+      "program": "${workspaceFolder}\\lesson4\\server.js"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "lesson2/server06",
-      "program": "${workspaceFolder}\\lesson2\\server06.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server07",
-      "program": "${workspaceFolder}\\lesson2\\server07.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server08",
-      "program": "${workspaceFolder}\\lesson2\\server08.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server09",
-      "program": "${workspaceFolder}\\lesson2\\server09.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server10",
-      "program": "${workspaceFolder}\\lesson2\\server10.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server11",
-      "program": "${workspaceFolder}\\lesson2\\server11.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server12",
-      "program": "${workspaceFolder}\\lesson2\\server12.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "lesson2/server13",
-      "program": "${workspaceFolder}\\lesson2\\server13.js"
-    },
+      "name": "lesson5/server",
+      "program": "${workspaceFolder}\\lesson5\\server.js"
+    }
   ]
 }
