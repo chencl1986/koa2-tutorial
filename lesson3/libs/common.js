@@ -1,5 +1,6 @@
 // crypto是系统提供的，用于处理加密的库
 const crypto = require('crypto')
+const fs = require('fs')
 
 module.exports = {
   md5 (buffer) {
@@ -11,5 +12,16 @@ module.exports = {
 
     // digest方法用于输出加密结果，hex为十六进制。
     return md5.digest('hex')
+  },
+  unlink (path) {
+    return new Promise((resolve, reject) => {
+      fs.unlink(path, (err) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    })
   }
 }

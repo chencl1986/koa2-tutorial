@@ -1,19 +1,24 @@
 const Router = require('koa-router')
 const fs = require('await-fs')
 const path = require('path')
-const { md5 } = require('../../libs/common')
 const {
-  HTTP_ROOT
+  md5,
+  unlink
+} = require('../../libs/common')
+const {
+  HTTP_ROOT,
+  UPLOAD_DIR
 } = require('../../config')
 
 const router = new Router()
+const table = 'banner_table'
 
 // 渲染登录页面
 router.get('/login', async (ctx, next) => {
   // ctx.render为koa-ejs提供用来渲染ejs模板的方法
   await ctx.render('admin/login', {
     HTTP_ROOT: ctx.config.HTTP_ROOT,
-    errmsg: ctx.query.errmsg  // 接受urlencoded传入的errmsg参数
+    errmsg: ctx.query.errmsg // 接受urlencoded传入的errmsg参数
   })
 })
 
@@ -30,7 +35,7 @@ router.post('/login', async (ctx, next) => {
 
   let admins = JSON.parse((await fs.readFile(path.resolve(__dirname, '../../admins.json'))).toString())
 
-  function findAdmin(username) {
+  function findAdmin (username) {
     let user = ''
 
     admins.forEach((item, index, arr) => {
@@ -71,10 +76,8 @@ router.get('/', async (ctx, next) => {
 
 // banner管理
 router.get('/banner', async (ctx, next) => {
-  const table = 'banner_table'
-  
   const datas = await ctx.db.query(`SELECT * FROM ${table}`)
-  
+
   await ctx.render('admin/table', {
     type: 'view',
     action: `${HTTP_ROOT}/admin/banner`,
@@ -84,39 +87,60 @@ router.get('/banner', async (ctx, next) => {
       {
         title: '标题',
         name: 'title',
-        type: 'text',
+        type: 'text'
       },
       {
         title: '图片',
         name: 'src',
-        type: 'file',
+        type: 'file'
       },
       {
         title: '链接',
         name: 'href',
-        type: 'text',
+        type: 'text'
       },
       {
         title: '序号',
         name: 'serial',
-        type: 'number',
-      },
-    ],
+        type: 'number'
+      }
+    ]
   })
 })
 
 router.post('/banner', async (ctx, next) => {
-  const {
+  let {
     title,
     src,
     href,
     serial
-  } = ctx.request.fields  // 通过koa-better-body解析的数据，定义在server.js中
+  } = ctx.request.fields // 通过koa-better-body解析的数据，定义在server.js中
 
-  console.log(title,
-    src,
-    href,
-    serial)
+  src = path.basename(src[0].path) // 获取图片上传后地址的文件名
+
+  await ctx.db.query(`INSERT INTO ${table} (title, src, href, serial) VALUES(?,?,?,?)`, [title, src, href, serial]) // 将数据添加到数据库
+
+  ctx.redirect(`${HTTP_ROOT}/admin/banner`) // 添加成功后，重定向到banner页面
+})
+
+router.get('/banner/delete/:id/', async (ctx, next) => {
+  const {
+    id
+  } = ctx.params
+
+  const data = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
+
+  if (data.length === 0) {
+    ctx.body = 'no data'
+  } else {
+    const row = data[0]
+
+    await unlink(path.resolve(UPLOAD_DIR, row.src))
+
+    await ctx.db.query(`DELETE FROM ${table} WHERE ID=?`, [id])
+
+    ctx.redirect(`${HTTP_ROOT}/admin/banner`)
+  }
 })
 
 // catlog管理

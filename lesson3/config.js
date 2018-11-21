@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   DB_HOST: 'localhost',
   DB_USER: 'root',
@@ -9,5 +11,8 @@ module.exports = {
 
   // 域名配置
   HTTP_ROOT: 'http://localhost:8080',
-  PORT: '8080'
+  PORT: '8080',
+
+  // 上传文件夹
+  UPLOAD_DIR: path.resolve(__dirname, './static/upload')
 }
