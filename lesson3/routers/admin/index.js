@@ -12,6 +12,28 @@ const {
 
 const router = new Router()
 const table = 'banner_table'
+const fields = [ // 循环输出表单
+  {
+    title: '标题',
+    name: 'title',
+    type: 'text'
+  },
+  {
+    title: '图片',
+    name: 'src',
+    type: 'file'
+  },
+  {
+    title: '链接',
+    name: 'href',
+    type: 'text'
+  },
+  {
+    title: '序号',
+    name: 'serial',
+    type: 'number'
+  }
+]
 
 // 渲染登录页面
 router.get('/login', async (ctx, next) => {
@@ -83,28 +105,7 @@ router.get('/banner', async (ctx, next) => {
     action: `${HTTP_ROOT}/admin/banner`,
     HTTP_ROOT,
     datas,
-    fields: [ // 循环输出表单
-      {
-        title: '标题',
-        name: 'title',
-        type: 'text'
-      },
-      {
-        title: '图片',
-        name: 'src',
-        type: 'file'
-      },
-      {
-        title: '链接',
-        name: 'href',
-        type: 'text'
-      },
-      {
-        title: '序号',
-        name: 'serial',
-        type: 'number'
-      }
-    ]
+    fields
   })
 })
 
@@ -130,17 +131,39 @@ router.get('/banner/delete/:id/', async (ctx, next) => {
 
   const data = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
 
-  if (data.length === 0) {
-    ctx.body = 'no data'
-  } else {
-    const row = data[0]
+  ctx.assert(data.length, 400, 'no data') // 若data.length === 0，则表示未查询到数据，此时抛出错误
 
-    await unlink(path.resolve(UPLOAD_DIR, row.src))
+  const row = data[0]
 
-    await ctx.db.query(`DELETE FROM ${table} WHERE ID=?`, [id])
+  await unlink(path.resolve(UPLOAD_DIR, row.src)) // 先删除文件
 
-    ctx.redirect(`${HTTP_ROOT}/admin/banner`)
-  }
+  await ctx.db.query(`DELETE FROM ${table} WHERE ID=?`, [id]) // 文件删除后，删除相应的数据库数据
+
+  ctx.redirect(`${HTTP_ROOT}/admin/banner`)
+})
+
+router.get('/banner/modify/:id/', async (ctx, next) => {
+  const {
+    id
+  } = ctx.params
+
+  const data = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
+
+  ctx.assert(data.length, 400, 'no data')
+
+  const row = data[0]
+
+  await ctx.render('admin/table', {
+    HTTP_ROOT,
+    type: 'modify',
+    old_data: row,
+    fields,
+    action: `${HTTP_ROOT}/admin/banner/modify/${id}`
+  })
+})
+
+router.post('/banner/modify/:id/', async (ctx, next) => {
+  ctx.body = 'ok'
 })
 
 // catlog管理

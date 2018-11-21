@@ -111,9 +111,11 @@
   $('#btn_add').click(function (){
     $('.my-panel, .my-panel-shadow').show();
   });
+  <% if(type=='view'){ %>
   $('.my-panel-shadow').click(function() {
     $('.my-panel, .my-panel-shadow').hide();
   })
+  <% } %>
   </script>
   <% if(type=='modify'){ %>
   <script>
