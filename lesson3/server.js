@@ -14,7 +14,7 @@ const server = new Koa()
 server.listen(config.PORT)
 
 // 中间件
-server.use(body({
+server.use(body({ // 通过koa-better-body解析数据
   uploadDir: path.resolve(__dirname, './static/upload')
 }))
 

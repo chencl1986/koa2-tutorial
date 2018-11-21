@@ -10,7 +10,6 @@ const router = new Router()
 
 // 渲染登录页面
 router.get('/login', async (ctx, next) => {
-  console.log(ctx)
   // ctx.render为koa-ejs提供用来渲染ejs模板的方法
   await ctx.render('admin/login', {
     HTTP_ROOT: ctx.config.HTTP_ROOT,
@@ -78,11 +77,46 @@ router.get('/banner', async (ctx, next) => {
   
   await ctx.render('admin/table', {
     type: 'view',
-    action: '',
-    fields: [],
+    action: `${HTTP_ROOT}/admin/banner`,
     HTTP_ROOT,
-    datas
+    datas,
+    fields: [ // 循环输出表单
+      {
+        title: '标题',
+        name: 'title',
+        type: 'text',
+      },
+      {
+        title: '图片',
+        name: 'src',
+        type: 'file',
+      },
+      {
+        title: '链接',
+        name: 'href',
+        type: 'text',
+      },
+      {
+        title: '序号',
+        name: 'serial',
+        type: 'number',
+      },
+    ],
   })
+})
+
+router.post('/banner', async (ctx, next) => {
+  const {
+    title,
+    src,
+    href,
+    serial
+  } = ctx.request.fields  // 通过koa-better-body解析的数据，定义在server.js中
+
+  console.log(title,
+    src,
+    href,
+    serial)
 })
 
 // catlog管理
