@@ -48,8 +48,8 @@
             >删除</a>
 
             <a
-              href="<%=HTTP_ROOT%>/admin/banner/modify/<%=data.ID%>"
-              class="btn btn-default glyphicon glyphicon-pencil"
+              href="#" data-id="<%=data.ID%>"
+              class="btn btn-default glyphicon glyphicon-pencil btn-modify"
             >修改</a>
           </td>
         </tr>
@@ -117,9 +117,43 @@
   })
   <% } %>
   </script>
-  <% if(type=='modify'){ %>
+
   <script>
-  $('.my-panel, .my-panel-shadow').show();
+  const HTTP_ROOT='<%=HTTP_ROOT%>';
+  const page_type='<%=page_type%>';
   </script>
-  <% } %>
+  
+  <script>
+    $('.btn-modify').click(async function () {
+      let id = this.dataset.id;
+      let url = `${HTTP_ROOT}/admin/${page_type}/get/${id}`;
+
+      let data = await $.ajax({
+        url,
+        dataType: 'json'
+      });
+
+      if (data.err) {
+        alert(data.msg);
+      } else {
+        //
+        let old_data = data.data;
+        $('.my-panel').show();
+        $('.my-panel-shadow').show();
+
+        $('.my-panel .panel-title').html('修改');
+        $('.my-panel form').attr('action', `${HTTP_ROOT}/admin/${page_type}/modify/${id}`);
+
+        console.log(old_data);
+
+        $('.my-panel input').each(function () {
+          if (old_data[this.name]) {
+            try {
+              this.value = old_data[this.name];
+            } catch (e) { }
+          }
+        });
+      }
+    });
+  </script>
 </html>

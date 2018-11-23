@@ -104,6 +104,7 @@ router.get('/banner', async (ctx, next) => {
     type: 'view',
     action: `${HTTP_ROOT}/admin/banner`,
     HTTP_ROOT,
+    page_type: 'banner',
     datas,
     fields
   })
@@ -127,7 +128,7 @@ router.post('/banner', async (ctx, next) => {
 router.get('/banner/delete/:id/', async (ctx, next) => {
   const {
     id
-  } = ctx.params
+  } = ctx.params // params用赖接收路由传参
 
   const data = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
 
@@ -170,7 +171,6 @@ router.get('/banner/get/:id', async (ctx, next) => {
   const rows = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
 
   if (!rows.length) {
-    ctx.status = 400
     ctx.body = {
       err: 1,
       msg: 'no this data'
@@ -195,7 +195,28 @@ router.get('/catlog', async (ctx, next) => {
 
 // article管理
 router.get('/article', async (ctx, next) => {
-  ctx.body = 'article'
+  const {
+    id
+  } = ctx.params
+  const post = ctx.request.fields
+  const keys = ['title', 'src', 'serial']
+  const vals = []
+
+  keys.forEach((key, index) => {
+    vals.push(post[key])
+  })
+
+  // 单独处理文件
+  if (post.src && post.src.length && post.src[0].size) { // 不同库返回的src，即文件属性，在无上传文件时，数据格式不同。此处做了兼容，判断不同库都有上传文件的情况。
+    keys.push('src')
+    vals.push(path.basename(post.src[0].path))
+  }
+
+  await ctx.db.query(`UPDATE ${table} ${
+    keys.map((key) => {
+      return `${key}=?`
+    }).join(',')
+  } WHERE ID=?`, [...vals], id)
 })
 
 module.exports = router.routes()
