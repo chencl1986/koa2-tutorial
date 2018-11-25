@@ -79,7 +79,7 @@ router.get('/', async (ctx, next) => {
 router.use(`/banner`, require(`./banner`))
 
 // catlog管理
-router.use(`/catelog`, require(`./catelog`))
+router.use(`/catalog`, require(`./catalog`))
 
 // article管理
 router.use(`/article`, require(`./article`))

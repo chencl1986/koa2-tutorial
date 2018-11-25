@@ -9,7 +9,7 @@ const {
   UPLOAD_DIR
 } = require('../../config')
 const table = 'banner_table'
-const bannerPath = `${HTTP_ROOT}/admin/banner`
+const pagePath = `${HTTP_ROOT}/admin/banner`
 const fields = [ // 循环输出表单
   {
     title: '标题',
@@ -38,9 +38,13 @@ router.get('/', async (ctx, next) => { // 注意根路由要加/
   const datas = await ctx.db.query(`SELECT * FROM ${table}`)
 
   await ctx.render('admin/table', {
-    type: 'view',
-    action: bannerPath,
+    action: pagePath,
     HTTP_ROOT,
+    page_types: {
+      banner: 'banner管理',
+      catalog: '类目管理',
+      article: '文章管理'
+    },
     page_type: 'banner',
     datas,
     fields
@@ -59,7 +63,7 @@ router.post('/', async (ctx, next) => {
 
   await ctx.db.query(`INSERT INTO ${table} (title, src, href, serial) VALUES(?,?,?,?)`, [title, src, href, serial]) // 将数据添加到数据库
 
-  ctx.redirect(bannerPath) // 添加成功后，重定向到banner页面
+  ctx.redirect(pagePath) // 添加成功后，重定向到banner页面
 })
 
 router.get('/delete/:id/', async (ctx, next) => {
@@ -77,7 +81,7 @@ router.get('/delete/:id/', async (ctx, next) => {
 
   await ctx.db.query(`DELETE FROM ${table} WHERE ID=?`, [id]) // 文件删除后，删除相应的数据库数据
 
-  ctx.redirect(bannerPath)
+  ctx.redirect(pagePath)
 })
 
 /* router.get('/modify/:id/', async (ctx, next) => {
@@ -160,7 +164,7 @@ router.post('/modify/:id/', async (ctx, next) => {
     unlink(path.resolve(UPLOAD_DIR, oldSrc))
   }
 
-  ctx.redirect(bannerPath)
+  ctx.redirect(pagePath)
 })
 
 module.exports = router.routes()
