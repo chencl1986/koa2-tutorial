@@ -34,6 +34,7 @@ const fields = [ // 循环输出表单
 ]
 
 // banner管理
+// 获取列表
 router.get('/', async (ctx, next) => { // 注意根路由要加/
   const datas = await ctx.db.query(`SELECT * FROM ${table}`)
 
@@ -51,6 +52,7 @@ router.get('/', async (ctx, next) => { // 注意根路由要加/
   })
 })
 
+// 添加banner
 router.post('/', async (ctx, next) => {
   let {
     title,
@@ -66,6 +68,7 @@ router.post('/', async (ctx, next) => {
   ctx.redirect(pagePath) // 添加成功后，重定向到banner页面
 })
 
+// 删除项目
 router.get('/delete/:id/', async (ctx, next) => {
   const {
     id
@@ -104,6 +107,7 @@ router.get('/delete/:id/', async (ctx, next) => {
   })
 }) */
 
+// 获取详情
 router.get('/get/:id', async (ctx, next) => {
   const {
     id
