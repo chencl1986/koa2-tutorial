@@ -1,21 +1,12 @@
 const Router = require('koa-router')
-const path = require('path')
 const router = new Router()
 const {
-  unlink
-} = require('../../libs/common')
-const {
-  HTTP_ROOT,
-  UPLOAD_DIR
+  HTTP_ROOT
 } = require('../../config')
 const table = 'catalog_table'
 const pagePath = `${HTTP_ROOT}/admin/catalog`
 const fields = [ // 循环输出表单
-  {
-    title: '标题',
-    name: 'title',
-    type: 'text'
-  }
+  { title: '标题', name: 'title', type: 'text' }
 ]
 
 // catalog管理
@@ -90,39 +81,19 @@ router.post('/modify/:id/', async (ctx, next) => {
     id
   } = ctx.params
   const post = ctx.request.fields
-  const keys = ['title', 'href', 'serial']
+  const keys = ['title']
   const vals = []
-
-  // 获取原文件地址，供删除功能使用
-  let rows = await ctx.db.query(`SELECT src FROM ${table} WHERE ID=?`, [id])
-
-  ctx.assert(rows.length, 400, 'no this data')
-
-  const oldSrc = rows[0].src
 
   keys.forEach((key, index) => {
     vals.push(post[key])
   })
-
-  // 单独处理文件，若有上传文件才插入文件名。
-  let srcChanged = false // 判断是否修改文件
-    ; (post.src && post.src.length && post.src[0].size) && (srcChanged = true)
-  if (srcChanged) { // 不同库返回的src，即文件属性，在无上传文件时，数据格式不同。此处做了兼容，判断不同库都有上传文件的情况。
-    keys.push('src')
-    vals.push(path.basename(post.src[0].path))
-  }
 
   // 将修改数据写入数据库。
   await ctx.db.query(`UPDATE ${table} SET ${
     keys.map((key) => {
       return `${key}=?`
     }).join(',')
-    } WHERE ID=?`, [...vals, id])
-
-  // 如果文件已修改，则删除原文件，或者将文件转移到临时文件夹，定期清理。
-  if (srcChanged) {
-    unlink(path.resolve(UPLOAD_DIR, oldSrc))
-  }
+  } WHERE ID=?`, [...vals, id])
 
   ctx.redirect(pagePath)
 })

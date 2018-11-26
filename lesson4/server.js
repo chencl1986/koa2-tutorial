@@ -61,7 +61,7 @@ router.use('/admin', require('./routers/admin'))
 router.use('/api', require('./routers/api'))
 
 // 此时require('./user')实际为router.routes()，为一个中间件，需要使用router.use
-router.use('/', require('./routers/www'))
+router.use('', require('./routers/www'))
 
 // 使用路由处理静态文件
 Static(router, {

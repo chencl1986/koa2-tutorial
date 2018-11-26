@@ -18,8 +18,8 @@ router.get('/', async (ctx, next) => {
   })
 })
 
-router.get('/list', async (ctx, next) => {
-  await ctx.render('www/list/:id', {
+router.get('/list/:id', async (ctx, next) => {
+  await ctx.render('www/list', {
     HTTP_ROOT
   })
 })
