@@ -35,12 +35,7 @@ router.post('/', async (ctx, next) => {
   let keys = [] // 存储表单的字段
   let vals = [] // 存储数据库中相应字段的值
 
-  fields.forEach((field, index) => {
-    const {
-      name,
-      type
-    } = field
-
+  fields.forEach(({ name, type }, index) => {
     keys.push(name) // 存储表单字段
 
     if (type === 'file') {
@@ -64,6 +59,14 @@ router.get('/delete/:id/', async (ctx, next) => {
   const data = await ctx.db.query(`SELECT * FROM ${table} WHERE ID=?`, [id])
 
   ctx.assert(data.length, 400, 'no data') // 若data.length === 0，则表示未查询到数据，此时抛出错误
+
+  const row = data[0]
+
+  fields.forEach(async ({ name, type }, index) => {
+    if (type === 'file') {
+      await unlink(path.resolve(UPLOAD_DIR, row[name])) // 先删除文件
+    }
+  })
 
   await ctx.db.query(`DELETE FROM ${table} WHERE ID=?`, [id]) // 文件删除后，删除相应的数据库数据
 
