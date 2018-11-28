@@ -30,7 +30,9 @@
           <th>ID</th>
 
           <%fields.forEach(field=>{%>
-          <th><%=field.title%></th>
+            <%if(field.type!='textarea'){%>
+              <th><%=field.title%></th>
+            <%}%>
           <%})%>
 
           <th></th>
@@ -42,7 +44,9 @@
           <td width="50"><%=data.ID%></td>
 
           <%fields.forEach(field=>{%>
-          <td><%=data[field.name]%></td>
+            <%if(field.type!='textarea'){%>
+              <td><%=data[field.name]%></td>
+            <%}%>
           <%})%>
 
           <td width="250">
@@ -79,6 +83,12 @@
             <div class="col-sm-10">
               <%if(field.type=='textarea'){%>
                 <textarea class="form-control" name="<%=field.name%>" placeholder="<%=field.title%>" rows="2  0"></textarea>
+              <%}else if(field.type=='select'){%>
+                <select class="form-control" name="<%=field.name%>">
+                  <%field.items.forEach(item=>{%>
+                    <option value="<%=item.ID%>"><%=item.title%></option>
+                  <%})%>
+                </select>
               <%}else{%>
                 <input type="<%=field.type%>" class="form-control" name="<%=field.name%>" placeholder="<%=field.title%>">
               <%}%>
@@ -136,6 +146,10 @@
       dataType: 'json'
     });
 
+    function toDou(n){
+      return n<10?`0${n}`:''+n;
+    }
+
     if(data.err){
       alert(data.msg);
     }else{
@@ -149,11 +163,18 @@
 
       console.log(old_data);
 
-      $('.my-panel input').each(function (){
-        if(old_data[this.name]){
+      $('.my-panel input, .my-panel textarea, .my-panel select').each(function (){
+        if(old_data[this.name] !== undefined){
           try{
-            this.value=old_data[this.name];
-          }catch(e){}
+            if(this.type=='date'){
+              let oDate=new Date(old_data[this.name]*1000);
+              this.value=`${oDate.getFullYear()}-${toDou(oDate.getMonth()+1)}-${toDou(oDate.getDate())}`;
+            }else{
+              this.value=old_data[this.name];
+            }
+          }catch(e){
+            console.log(e)
+          }
         }
       });
     }
