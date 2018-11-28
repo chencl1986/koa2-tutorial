@@ -137,6 +137,11 @@
   </script>
 
   <script>
+  $('.my-panel-shadow').on('click', function () {
+    $('.my-panel').hide();
+    $('.my-panel-shadow').hide();
+  });
+
   $('.btn-modify').click(async function (){
     let id=this.dataset.id;
     let url=`${HTTP_ROOT}/admin/${page_type}/get/${id}`;

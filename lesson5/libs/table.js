@@ -37,6 +37,7 @@ module.exports = function (table, pageType, pagePath, fields) {
 
   // 添加项目
   router.post('/', async (ctx, next) => {
+    const post = ctx.request.fields
     let keys = [] // 存储表单的字段
     let vals = [] // 存储数据库中相应字段的值
 
@@ -49,14 +50,17 @@ module.exports = function (table, pageType, pagePath, fields) {
       keys.push(name) // 存储表单字段
 
       if (type === 'file') {
-        vals.push(path.basename(ctx.request.fields[name][0].path)) // 从提交的表单中读取文件名
+        if (post[name] && post[name].length && post[name][0].size) {
+          vals.push(path.basename(ctx.request.fields[name][0].path)) // 从提交的表单中读取文件名
+        }
       } else if (type === 'date') {
-        vals.push(Math.floor(new Date(ctx.request.fields[name]).getTime() / 1000))
+        vals.push(Math.floor(new Date(post[name]).getTime() / 1000))
       } else {
-        vals.push(ctx.request.fields[name]) // 从提交的表单中读取相应字段的值
+        vals.push(post[name]) // 从提交的表单中读取相应字段的值
       }
     })
 
+    console.log(vals)
     await ctx.db.query(`INSERT INTO ${table} (${keys.join(',')}) VALUES(${new Array(keys.length).fill('?').join(',')})`, vals) // 将数据添加到数据库
 
     ctx.redirect(pagePath) // 添加成功后，重定向到banner页面
@@ -132,9 +136,6 @@ module.exports = function (table, pageType, pagePath, fields) {
 
     fields.forEach(({ name, type }, index) => {
       if (type === 'file') {
-        /**
-         * TODO: 文件不存在判断错误
-         */
         if (post[name] && post[name].length && post[name][0].size) {
           srcChanged[name] = true
           keys.push(name)
@@ -142,7 +143,7 @@ module.exports = function (table, pageType, pagePath, fields) {
         }
       } else if (type === 'date') {
         keys.push(name)
-        vals.push(Math.floor(new Date(ctx.request.fields[name]).getTime() / 1000))
+        vals.push(Math.floor(new Date(post[name]).getTime() / 1000))
       } else {
         keys.push(name)
         vals.push(post[name])

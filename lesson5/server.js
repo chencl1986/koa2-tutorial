@@ -42,6 +42,29 @@ ejs(server, {
   debug: false
 })
 
+server.use(async (ctx, next) => {
+  const {
+    HTTP_ROOT
+  } = ctx.config
+
+  try {
+    await next()
+
+    // 若因无正确路由处理导致未正常渲染，则显示404
+    if (!ctx.body) {
+      await ctx.render('www/404', {
+        HTTP_ROOT
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    // 若因报错等问题，如对应id无数据导致报错，则显示404
+    await ctx.render('www/404', {
+      HTTP_ROOT
+    })
+  }
+})
+
 // 路由配置
 const router = new Router()
 
